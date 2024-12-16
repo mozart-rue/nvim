@@ -223,26 +223,32 @@ return {
 
 					dockerls = {},
 					html = {},
-					cssls = {
-						capabilities = capabilities,
-						settings = {
-							cmd = { "vscode-css-language-server", "--stdio" },
-							filetypes = { "css", "scss", "less" },
-							init_options = { provideFormatter = true }, -- needed to enable formatting capabilities
-							root_dir = util.root_pattern("package.json", ".git"),
-							single_file_support = true,
-							settings = {
-								css = { validate = true },
-								scss = { validate = true },
-								less = { validate = true },
-							},
-						},
-					},
+					-- cssls = {
+					-- 	capabilities = capabilities,
+					-- 	settings = {
+					-- 		cmd = { "vscode-css-language-server", "--stdio" },
+					-- 		filetypes = { "css", "scss", "less" },
+					-- 		init_options = { provideFormatter = true }, -- needed to enable formatting capabilities
+					-- 		root_dir = util.root_pattern("package.json", ".git"),
+					-- 		single_file_support = true,
+					-- 		settings = {
+					-- 			css = { validate = true },
+					-- 			scss = { validate = true },
+					-- 			less = { validate = true },
+					-- 		},
+					-- 	},
+					-- },
 					cssmodules_ls = {
 						capabilities = capabilities,
 						settings = {
 							cmd = { "cssmodules-language-server" },
-							filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+							filetypes = {
+								"javascript",
+								"javascriptreact",
+								"typescript",
+								"typescriptreact",
+								"cssmodules",
+							},
 							root_dir = function(fname)
 								return vim.fs.dirname(vim.fs.find("package.json", { path = fname, upward = true })[1])
 							end,
@@ -253,7 +259,7 @@ return {
 							return require("lspconfig.util").root_pattern(".git")(...)
 						end,
 					},
-					ts_ls = {
+					vtsls = {
 						root_dir = function(...)
 							return require("lspconfig.util").root_pattern(".git")(...)
 						end,
