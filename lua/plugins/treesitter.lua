@@ -27,12 +27,11 @@ return {
 				"typescript",
 				"javascript",
 			},
-
-			-- matchup = {
-			-- 	enable = true,
-			-- },
-
-			-- https://github.com/nvim-treesitter/playground#query-linter
+			highlight = {
+				enable = true, -- Enable Treesitter-based syntax highlighting
+				disable = {}, -- List of languages to disable highlighting for
+				additional_vim_regex_highlighting = false, -- Disable Vim regex-based highlighting
+			},
 			query_linter = {
 				enable = true,
 				use_virtual_text = true,
