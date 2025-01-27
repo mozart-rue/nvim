@@ -34,6 +34,12 @@ return {
 			"hrsh7th/nvim-cmp",
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
+			{
+				"zbirenbaum/copilot-cmp",
+				config = function()
+					require("copilot_cmp").setup()
+				end,
+			},
 		},
 
 		config = function()
