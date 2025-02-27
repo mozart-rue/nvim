@@ -57,20 +57,20 @@ return {
 					compile_file_suffix = "_compiled", -- Compiled file suffix
 					hide_end_of_buffer = true, -- Hide the '~' character at the end of the buffer for a cleaner look
 					hide_nc_statusline = true, -- Override the underline style for non-active statuslines
-					transparent = true, -- Disable setting bg (make neovim's background transparent)
+					transparent = false, -- Disable setting bg (make neovim's background transparent)
 					terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
 					dim_inactive = false, -- Non focused panes set to alternative background
 					module_default = true, -- Default enable value for modulesitalic
 					styles = { -- Style to be applied to different syntax groups
-						comments = "italic", -- Value is any valid attr-list value `:help attr-list`
-						functions = "underdotted",
-						keywords = "NONE",
-						variables = "bold",
-						conditionals = "standout",
+						comments = "NONE", -- Value is any valid attr-list value `:help attr-list`
+						functions = "bold",
+						keywords = "bold",
+						variables = "italic",
+						conditionals = "NONE",
 						constants = "NONE",
 						numbers = "bold",
 						operators = "NONE",
-						strings = "undercurl",
+						strings = "NONE",
 						types = "NONE",
 					},
 					inverse = { -- Inverse highlight for different types
@@ -280,6 +280,16 @@ return {
 		-- you can set set configuration options here
 		config = function()
 			vim.g.zenbones_darken_comments = 45
+		end,
+	},
+
+	{
+		"Tsuzat/NeoSolarized.nvim",
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other start plugins
+		transparent = true,
+		config = function()
+			vim.cmd([[ colorscheme NeoSolarized ]])
 		end,
 	},
 }
