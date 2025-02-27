@@ -195,13 +195,37 @@ return {
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local util = require("lspconfig.util")
+
+			local function get_python_path(workspace)
+				-- Use activated virtualenv.
+				if vim.env.VIRTUAL_ENV then
+					return util.path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+				end
+
+				-- Find and use virtualenv in workspace directory.
+				for _, pattern in ipairs({ "*", ".*" }) do
+					local match = vim.fn.glob(util.path.join(workspace, pattern, "pyvenv.cfg"))
+					if match ~= "" then
+						return util.path.join(util.path.dirname(match), "bin", "python")
+					end
+				end
+
+				-- Fallback to system Python.
+				return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+			end
+
 			local servers =
 				{
 					-- clangd = {},
 					gopls = {
 						capabilities = capabilities,
 					},
-					-- pyright = {},
+					pyright = {
+						capabilities = capabilities,
+						on_new_config = function(config, root_dir)
+							config.settings.python.pythonPath = get_python_path(root_dir)
+						end,
+					},
 					-- rust_analyzer = {},
 					-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 					--
