@@ -15,6 +15,18 @@ return {
 			vim.keymap.set("n", "<leader>lf", "<Cmd>Lspsaga finder<CR>", opts)
 			vim.keymap.set("n", "<leader>lo", "<Cmd>Lspsaga outline<CR>", opts)
 			vim.keymap.set("n", "<leader>lr", "<Cmd>Lspsaga rename<CR>", opts)
+
+			-- Diagnostics
+			vim.keymap.set("n", "<leader>ll", "<Cmd>Lspsaga show_line_diagnostics<CR>", opts)
+			vim.keymap.set("n", "<leader>lb", "<Cmd>Lspsaga show_buf_diagnostics<CR>", opts)
+			vim.keymap.set("n", "<leader>lw", "<Cmd>Lspsaga show_workspace_diagnostics<CR>", opts)
+			vim.keymap.set("n", "<leader>lc", "<Cmd>Lspsaga show_cursor_diagnostics<CR>", opts)
+
+			vim.keymap.set("n", "<M-k>", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", opts)
+			vim.keymap.set("n", "<M-j>", "<Cmd>Lspsaga diagnostic_jump_next<CR>", opts)
+
+			-- Terminal
+			vim.keymap.set("n", "<leader>lt", "<Cmd>Lspsaga term_toggle<CR>", opts)
 		end,
 	},
 }
