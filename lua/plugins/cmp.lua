@@ -34,7 +34,18 @@ return {
 			--  into multiple repos for maintenance purposes.
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
+			"tailwind-tools",
+			"onsails/lspkind.nvim",
 		},
+		opts = function()
+			return {
+				formatting = {
+					format = require("lspkind").cmp_format({
+						before = require("tailwind-tools.cmp").lspkind_format,
+					}),
+				},
+			}
+		end,
 		config = function()
 			-- See `:help cmp`
 			local cmp = require("cmp")
