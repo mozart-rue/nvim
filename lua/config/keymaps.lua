@@ -49,7 +49,7 @@ keymap.set("n", "<C-j>", function()
 end, opts)
 
 -- Quickfix list
-keymap.set("n", "<M-q>", "<cmd>copen<CR>")
-keymap.set("n", "<M-c>", "<cmd>cclose<CR>")
-keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
-keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
+keymap.set("n", "<Leader>z", "<cmd>copen<CR>")
+keymap.set("n", "<Leader>Z", "<cmd>cclose<CR>")
+keymap.set("n", "zm", "<cmd>cnext<CR>")
+keymap.set("n", "zn", "<cmd>cprev<CR>")
