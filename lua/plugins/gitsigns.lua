@@ -61,6 +61,10 @@ return {
 						gitsigns.diffthis("~")
 					end)
 					map("n", "<leader>td", gitsigns.toggle_deleted)
+					map("n", "<leader>hq", gitsigns.setqflist)
+					map("n", "<leader>hw", gitsigns.toggle_word_diff)
+					map("n", "<leader>hl", gitsigns.preview_hunk_inline)
+					map("n", "<leader>hh", gitsigns.get_hunks)
 
 					-- Text object
 					map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
