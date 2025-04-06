@@ -65,6 +65,12 @@ return {
 					map("n", "<leader>hw", gitsigns.toggle_word_diff)
 					map("n", "<leader>hl", gitsigns.preview_hunk_inline)
 					map("n", "<leader>hh", gitsigns.get_hunks)
+					map("n", "<leader>hy", gitsigns.toggle_numhl)
+					map("n", "<leader>hu", gitsigns.toggle_linehl)
+
+					map("n", "<leader>hc", function()
+						vim.cmd("G commit")
+					end, { desc = "Commit staged changes" })
 
 					-- Text object
 					map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
