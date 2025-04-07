@@ -12,6 +12,24 @@ return {
 			-- Enable or disable Copilot Chat
 			enabled = true,
 			model = "claude-3.7-sonnet", -- You can use "gpt-3.5-turbo" for faster responses or "gpt-4" for more capabilities
+			context = {
+				-- Enable codebase awareness
+				enable = true,
+				-- Include relevant files based on the current buffer
+				strategy = {
+					-- Include the current file for context
+					"buffer",
+					-- Include related files in the same directory
+					"directory",
+					-- Include files referenced by imports/requires
+					"references",
+					-- Can also add "embeddings" if the plugin supports it
+				},
+				-- Maximum number of lines to include (adjust based on model context window)
+				max_lines = 200,
+				-- Filter out non-code files like images, etc.
+				include_pattern = { "%.lua$", "%.js$", "%.ts$", "%.jsx?$", "%.tsx?$", "%.py$", "%.go$", "%.dart$" }, -- adjust based on your codebase
+			},
 			-- Set the maximum number of suggestions to display
 			max_suggestions = 10,
 			-- Customize the appearance of the chat window
