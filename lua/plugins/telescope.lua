@@ -123,6 +123,19 @@ return {
 			vim.keymap.set("n", "<leader>sn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
 			end, { desc = "[S]earch [N]eovim files" })
+
+			-- View file history in Telescope floating window
+			vim.keymap.set("n", "<leader>gh", function()
+				require("telescope.builtin").git_bcommits()
+			end, { desc = "File commit history in Telescope" })
+
+			-- View commit history of the current file with patches
+			vim.keymap.set("n", "<leader>gH", ":0Gclog --patch<CR>", { desc = "File commit history with patches" })
+
+			-- View repo history in Telescope floating window
+			vim.keymap.set("n", "<leader>gl", function()
+				require("telescope.builtin").git_commits()
+			end, { desc = "Repository commit history in Telescope" })
 		end,
 	},
 }

@@ -25,6 +25,9 @@ return {
 					vim.cmd.Git({ "pull" })
 				end, opts)
 
+				-- View commit history of the entire repo
+				vim.keymap.set("n", "<leader>gL", ":G log<CR>", { desc = "Repository commit history" })
+
 				-- NOTE: It allows me to easily set the branch i am pushing and any tracking
 				-- needed if i did not set the branch up correctly
 				vim.keymap.set("n", "<leader>t", ":Git push -u origin ", opts)
