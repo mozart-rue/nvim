@@ -1,13 +1,7 @@
 return {
   "leath-dub/snipe.nvim",
   keys = {
-    {
-      "gb",
-      function()
-        require("snipe").open_buffer_menu()
-      end,
-      desc = "Open Snipe buffer menu",
-    },
+    { "gb", function() require("snipe").open_buffer_menu() end, desc = "Open Snipe buffer menu" }
   },
   opts = {
     ui = {
@@ -38,6 +32,7 @@ return {
     },
     -- Define the way buffers are sorted by default
     -- Can be any of "default" (sort buffers by their number) or "last" (sort buffers by last accessed)
-    sort = "last",
-  },
+    sort = "last"
+
+  }
 }

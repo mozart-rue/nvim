@@ -1,11 +1,7 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
---
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
-keymap.set("n", "<leader>pv", vim.cmd.Ex) -- Open built in file explorer
+keymap.set("n", "<leader>pv", vim.cmd.Ex)                                            -- Open built in file explorer
 keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Replace matches
 
 -- Increment/decrement
@@ -28,8 +24,8 @@ keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
 
 -- New tab
 keymap.set("n", "te", ":tabedit")
--- keymap.set("n", "<tab>", ":tabnext<Return>", opts)
--- keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
+keymap.set("n", "L", ":tabnext<Return>", opts)
+keymap.set("n", "H", ":tabprev<Return>", opts)
 
 -- Split window
 keymap.set("n", "zs", ":split<Return>", opts)
@@ -48,9 +44,9 @@ keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
 -- Diagnostics
--- keymap.set("n", "<C-j>", function()
---   vim.diagnostic.goto_next()
--- end, opts)
+keymap.set("n", "<C-j>", function()
+  vim.diagnostic.goto_next()
+end, opts)
 
 -- Quickfix list
 keymap.set("n", "<Leader>z", "<cmd>copen<CR>")
@@ -58,5 +54,5 @@ keymap.set("n", "<Leader>Z", "<cmd>cclose<CR>")
 keymap.set("n", "zm", "<cmd>cnext<CR>")
 keymap.set("n", "zn", "<cmd>cprev<CR>")
 
--- Exit terminal mode
-keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
+-- Terminal
+vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
