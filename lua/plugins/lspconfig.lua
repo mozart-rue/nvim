@@ -116,20 +116,70 @@ return {
       }
       lspconfig.astro.setup { on_attach = on_attach, capabilities = capabilities }
 
+      -- Elixir language server
+      lspconfig.elixirls.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        filetypes = { "elixir", "eelixir", "heex", "surface" },
+        settings = {
+          elixirLS = {
+            dialyzerEnabled = true,
+            fetchDeps = false,
+            enableTestLenses = true,
+            suggestSpecs = true,
+          }
+        }
+      }
+
+      -- PHP (intelephense) language server
+      lspconfig.intelephense.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        filetypes = { "php" },
+        settings = {
+          intelephense = {
+            stubs = {
+              "bcmath", "bz2", "calendar", "Core", "curl", "date", "dom", "mysqli",
+              "filter", "ftp", "gd", "gettext", "hash", "iconv", "imap", "intl",
+              "json", "ldap", "libxml", "mbstring", "mcrypt", "mysql", "pcntl",
+              "pdo", "pgsql", "Phar", "readline", "regex", "session", "SimpleXML",
+              "sockets", "sodium", "standard", "superglobals", "tokenizer", "xml",
+              "xdebug", "xmlreader", "xmlwriter", "yaml", "zip", "zlib"
+            },
+            -- environment = {
+            --   phpVersion = "8.2", -- Set your PHP version here
+            -- },
+            format = {
+              enable = true, -- Enable formatting
+            },
+            diagnostics = {
+              enable = true, -- Enable diagnostics
+            },
+          },
+        },
+      }
+
       -- Dart is often handled by flutter-tools (see below), but if you need dartls separately:
       -- lspconfig.dartls.setup { on_attach = on_attach, capabilities = capabilities }
 
 
       -- ----- Diagnostics Configuration -----
       -- Customize diagnostic appearance
-      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics, {
-          underline = true,
-          update_in_insert = false, -- Don't update diagnostics in insert mode
-          virtual_text = { spacing = 4, prefix = "●" }, -- Use prefix instead of severity icons here
-          severity_sort = true,
-        }
-      )
+      -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+      --   vim.lsp.diagnostic.on_publish_diagnostics, {
+      --     underline = true,
+      --     update_in_insert = false, -- Don't update diagnostics in insert mode
+      --     virtual_text = { spacing = 4, prefix = "●" }, -- Use prefix instead of severity icons here
+      --     severity_sort = true,
+      --   }
+      -- )
+
+      vim.diagnostic.config({
+        underline = true,
+        update_in_insert = false, -- Don't update diagnostics in insert mode
+        virtual_text = { spacing = 4, prefix = "●" }, -- Use prefix instead of severity icons
+        severity_sort = true,
+      })
 
       -- Use custom signs for diagnostics in the sign column
       local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -155,7 +205,7 @@ return {
           focusable = false,
           style = "minimal",
           border = "rounded",
-          source = "always", -- Show source of diagnostic eg. "eslint"
+          source = true, -- Show source of diagnostic eg. "eslint"
           header = "",
           prefix = "",
         },
@@ -295,9 +345,11 @@ return {
         "eslint",
         "dockerls",
         "astro",
-        "bashls", -- Example: add bash
-        "jsonls", -- Example: add json
-        "yamlls", -- Example: add yaml
+        "intelephense", -- PHP language server
+        "bashls",       -- Example: add bash
+        "jsonls",       -- Example: add json
+        "yamlls",       -- Example: add yaml
+        "elixirls",     -- Elixir language server
         -- Add other servers you need here
         -- Note: dartls is usually installed via Flutter SDK, not Mason
         -- Note: sourcekit might need manual installation depending on OS/setup
@@ -392,6 +444,48 @@ return {
                     checkThirdParty = false,
                   },
                   telemetry = { enable = false },
+                }
+              }
+            })
+          end,
+
+          ["elixirls"] = function()
+            local lspconfig = require('lspconfig')
+            local cmp_nvim_lsp = require('cmp_nvim_lsp')
+            local capabilities = cmp_nvim_lsp.default_capabilities()
+
+            local on_attach = function(client, bufnr)
+              local map = function(mode, lhs, rhs, desc)
+                if desc then desc = 'LSP: ' .. desc end
+                vim.keymap.set(mode, lhs, rhs, { noremap = true, silent = true, buffer = bufnr, desc = desc })
+              end
+              map('n', 'gD', vim.lsp.buf.declaration, 'Go to Declaration')
+              map('n', 'gi', vim.lsp.buf.implementation, 'Go to Implementation')
+              map('n', '<leader>ca', vim.lsp.buf.code_action, 'Code Action')
+              map('n', '<leader>rn', vim.lsp.buf.rename, 'Rename')
+              map('n', 'gr', '<cmd>Trouble lsp_references<cr>', 'Go to References')
+
+              if client.supports_method('textDocument/formatting') then
+                local augroup_format = vim.api.nvim_create_augroup("LspFormat_elixirls", { clear = true })
+                vim.api.nvim_clear_autocmds({ group = augroup_format, buffer = bufnr })
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                  group = augroup_format,
+                  buffer = bufnr,
+                  callback = function() vim.lsp.buf.format({ bufnr = bufnr, async = true }) end,
+                })
+              end
+            end
+
+            lspconfig.elixirls.setup({
+              capabilities = capabilities,
+              on_attach = on_attach,
+              filetypes = { "elixir", "eelixir", "heex", "surface" },
+              settings = {
+                elixirLS = {
+                  dialyzerEnabled = true,
+                  fetchDeps = false,
+                  enableTestLenses = true,
+                  suggestSpecs = true,
                 }
               }
             })
