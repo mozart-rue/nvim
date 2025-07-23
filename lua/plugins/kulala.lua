@@ -2,6 +2,7 @@ return {
   {
     "mistweaverco/kulala.nvim",
     config = function()
+      require('kulala').setup({})
       local opts = { noremap = true, silent = true }
       vim.keymap.set("n", "<leader>kr", "<Cmd>lua require('kulala').run()<CR>", opts)
       vim.keymap.set("n", "<leader>kk", "<Cmd>lua require('kulala').replay()<CR>", opts)
