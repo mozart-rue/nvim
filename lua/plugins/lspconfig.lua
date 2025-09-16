@@ -220,9 +220,4 @@ return {
       })
     end,
   },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-    -- The config for this is now merged into the main nvim-lspconfig section above.
-  },
 }
