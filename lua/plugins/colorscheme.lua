@@ -291,4 +291,20 @@ return {
     config = function()
     end,
   },
+  {
+    "xero/miasma.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  { "EdenEast/nightfox.nvim" },
+  {
+    "vague2k/vague.nvim",
+    config = function()
+      -- NOTE: you do not need to call setup if you don't want to.
+      require("vague").setup({
+        -- optional configuration here
+      })
+    end
+  },
+  { "NLKNguyen/papercolor-theme" },
 }
